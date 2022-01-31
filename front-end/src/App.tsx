@@ -10,7 +10,7 @@ function App() {
     <UserAuthContextProvider>
       <Router>
         <Routes>
-          <Route path='/main' element={<Main />} />
+          <Route path='/' element={<Main />} />
           <Route path='/dashboard' element={
             <PrivateRoute>
                 <Dashboard />

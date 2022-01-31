@@ -13,7 +13,7 @@ const PrivateRoute =  ({children}:Children) => {
         return <Loading />
     }
     else if(!loading && !isAuthenticated){
-        return <Navigate to='/main' />
+        return <Navigate to='/' />
     }
     else return children
 }
