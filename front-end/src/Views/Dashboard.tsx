@@ -1,9 +1,23 @@
+import { signOut } from "firebase/auth";
+import { Button } from "react-bootstrap";
 import { auth } from "../Services/Firebase/firebaseConfig";
 
 const Dashboard = () => {
-    let { currentUser } = auth;
-    
-  return <div>Dashboard {currentUser?currentUser.email:'no user found'}</div>;
+
+  const handleClick = (e:React.MouseEvent | React.KeyboardEvent) => {
+    e.preventDefault();
+    signOut(auth);
+  }
+
+  const { currentUser } = auth;
+  console.log(currentUser)
+      return(
+      <>
+      <h1>Dashboard</h1>
+      {currentUser && currentUser.email}
+      <Button onClick={handleClick}>Sign Out</Button>
+      </>
+    )
 };
 
 export default Dashboard;

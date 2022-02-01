@@ -7,15 +7,17 @@ type Children = {
 }
 
 
-const PrivateRoute =  ({children}:Children) => {
-    let { isAuthenticated, loading } = useUserAuth();
+const PublicRoute =  ({children}:Children) => {
+    let { isAuthenticated, loading  } = useUserAuth();
     if(loading){
         return <Loading />
     }
-    else if(!isAuthenticated){
-        return <Navigate to='/login' />
-    }
-    else return children
-}
 
-export default PrivateRoute;
+    else if(isAuthenticated){
+        return <Navigate to='/dashboard' />
+    }
+
+    else return children;
+}
+    
+export default PublicRoute;

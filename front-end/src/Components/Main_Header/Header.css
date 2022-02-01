@@ -1,0 +1,19 @@
+@import url('../../index.css');
+
+#home_header    {
+    background-color: var(--dark-grey)
+}
+
+#login_btn  {
+    color: rgba(255,255,255,.55);
+}
+
+#login_btn:hover    {
+    color: var(--off-white)
+}
+
+#signup_btn {
+    background-color: var(--orange);
+    border-color: var(--dark-grey);
+    color: var(--off-white)
+}
