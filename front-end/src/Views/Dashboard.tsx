@@ -1,20 +1,20 @@
-import { signOut } from "firebase/auth";
 import { Button } from "react-bootstrap";
-import { auth } from "../Services/Firebase/firebaseConfig";
+import { useUserAuth } from "../Contexts/AuthContext";
+
 
 const Dashboard = () => {
+  const { logOut, User } = useUserAuth();
+  console.log(User)
 
   const handleClick = (e:React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
-    signOut(auth);
+    logOut();
   }
 
-  const { currentUser } = auth;
-  console.log(currentUser)
       return(
       <>
       <h1>Dashboard</h1>
-      {currentUser && currentUser.email}
+      <p>Welcome Back {User.displayName || User.email}</p>
       <Button onClick={handleClick}>Sign Out</Button>
       </>
     )

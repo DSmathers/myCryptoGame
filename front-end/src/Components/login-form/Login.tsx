@@ -8,13 +8,12 @@ import { useState } from 'react'
 const Login = () => {
     const [ error, setError ] = useState<string>()
 
-    const handleSubmit = async (event:any) => {
+    const handleSubmit = (event:any) => {
         event.preventDefault();
-        try {
-            await signInWithEmailAndPassword(auth, event.target[0].value, event.target[1].value)    
-        } catch (error:any) {
-            setError(error.message)
-        } 
+        signInWithEmailAndPassword(auth, event.target[0].value, event.target[1].value).catch((err) => {
+            setError(err.message);
+        })
+     
     }
     return(
         <Card className="ms-auto me-auto mt-3" style={{maxWidth: '350px'}}>

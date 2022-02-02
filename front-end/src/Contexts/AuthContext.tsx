@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, User } from 'firebase/auth';
 import { createContext, useEffect, useState, useContext, ReactElement } from 'react'
 import { auth } from '../Services/Firebase/firebaseConfig'
 
@@ -6,9 +6,7 @@ import { auth } from '../Services/Firebase/firebaseConfig'
 
 const userAuthContext = createContext({} as AuthContext);
 
-export function useUserAuth(){
-    return useContext(userAuthContext);
-}
+
 
 type Children = {
     children: ReactElement;
@@ -16,22 +14,31 @@ type Children = {
 
 type AuthContext = {
     isAuthenticated: boolean,
-    loading: boolean
+    logOut: any,
+    currentUser?:any,
+    User?:any,
 }
+
+
 
 export function UserAuthContextProvider({children}:Children){
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
     const [ loading, setLoading ] = useState(true);
+    const [ currentUser, setCurrentUser ] = useState<User>();
+
+
+
+    const User = {
+        email: currentUser?.email,
+        displayName: currentUser?.displayName,
+        userId: currentUser?.uid
+    }
 
     //Firebase Methods Go Here
 
-    const logOut = () => {
+    function logOut(){
         signOut(auth)
     };
-
-    function login(email:string, password:string) {
-        signInWithEmailAndPassword(auth, email, password)
-    }
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -41,6 +48,7 @@ export function UserAuthContextProvider({children}:Children){
             } 
             else { 
                 setIsAuthenticated(true)
+                setCurrentUser(currentUser)
                 setLoading(false)
             }
         });
@@ -52,11 +60,17 @@ export function UserAuthContextProvider({children}:Children){
 
     const value = {
         isAuthenticated,
-        loading,
         logOut,
-        login
+        User
     }
 
-    return <userAuthContext.Provider value={value}>{children}</userAuthContext.Provider>
+    return (
+        <userAuthContext.Provider value={value}>
+            {!loading && children}
+        </userAuthContext.Provider>
+        )
 }
 
+export function useUserAuth(){
+    return useContext(userAuthContext);
+}

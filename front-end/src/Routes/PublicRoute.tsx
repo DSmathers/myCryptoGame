@@ -1,23 +1,13 @@
 import { Navigate } from 'react-router-dom'
 import { useUserAuth } from '../Contexts/AuthContext'
-import Loading from '../Components/Loading';
 
 type Children = {
     children: JSX.Element;
 }
 
-
 const PublicRoute =  ({children}:Children) => {
-    let { isAuthenticated, loading  } = useUserAuth();
-    if(loading){
-        return <Loading />
-    }
-
-    else if(isAuthenticated){
-        return <Navigate to='/dashboard' />
-    }
-
-    else return children;
+    let { isAuthenticated } = useUserAuth();
+    return isAuthenticated?<Navigate to='/dashboard' />:children;
 }
     
 export default PublicRoute;
