@@ -1,7 +1,6 @@
 import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useState} from 'react' 
-import { useUserAuth } from '../../Contexts/AuthContext';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../Services/Firebase/firebaseConfig';
 

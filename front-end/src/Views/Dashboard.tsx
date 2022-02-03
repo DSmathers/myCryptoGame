@@ -2,15 +2,14 @@ import { Button } from "react-bootstrap";
 import { useUserAuth } from "../Contexts/AuthContext";
 
 
-const Dashboard = () => {
-  const { logOut, User } = useUserAuth();
-  console.log(User)
+const Dashboard = () => {  
+  const { logOut, User  } = useUserAuth();
 
   const handleClick = (e:React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     logOut();
   }
-
+  
       return(
       <>
       <h1>Dashboard</h1>

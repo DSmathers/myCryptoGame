@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, User } from 'firebase/auth';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import { createContext, useEffect, useState, useContext, ReactElement } from 'react'
 import { auth } from '../Services/Firebase/firebaseConfig'
 
@@ -61,7 +61,7 @@ export function UserAuthContextProvider({children}:Children){
     const value = {
         isAuthenticated,
         logOut,
-        User
+        User,
     }
 
     return (
