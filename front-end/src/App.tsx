@@ -1,18 +1,20 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Main from './Views/Main';
-import { UserAuthContextProvider } from './Contexts/AuthContext'
 import PrivateRoute from './Routes/PrivateRoute';
-import Dashboard from './Views/Dashboard';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Login from './Components/login-form/Login';
 import Signup from './Components/signup-form/Signup';
 import PublicRoute from './Routes/PublicRoute';
+import MarketTab from './Views/Game/components/market/MarketTab';
+import Watchlist from './Views/Game/components/watchlist/Watchlist';
+import Wallet from './Views/Game/components/wallet/Wallet';
+import Header from './Components/Main_Header/Header';
 
 
 function App() {
   return (
-    <UserAuthContextProvider>
       <Router>
+        <Header />
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/login' element={
@@ -22,14 +24,24 @@ function App() {
           <Route path='/signup' element={
             <PublicRoute>
               <Signup />
-            </PublicRoute>} />    
-          <Route path='/dashboard' element={
+            </PublicRoute>} />
+            <Route path='/market' element={
             <PrivateRoute>
-                <Dashboard />
-            </PrivateRoute>} />
+              <MarketTab />    
+            </PrivateRoute>
+          } />
+          <Route path='/watchlist' element={
+            <PrivateRoute>
+              <Watchlist />       
+            </PrivateRoute>
+          } />
+          <Route path='/wallet' element={
+            <PrivateRoute>
+              <Wallet />        
+            </PrivateRoute>
+          } />  
         </Routes>
       </Router>
-    </UserAuthContextProvider>
   )
 }
 

@@ -15,11 +15,12 @@ const Main = () => {
     symbol: string
   }
 
-  
+  let url: string | undefined = process.env.REACT_APP_TOP_TEN_ENDPOINT;
 
   let [sampleArray, setSampleArray ] = useState<Coins[]>();
   useEffect(() => {
-    axios.get('http://localhost:8000/API/markets/get-top-ten').then((res) => {
+    if(!url){throw 'api address not defined'}
+    axios.get(url).then((res) => {
     console.log(res.data)
     setSampleArray(res.data);
   })
@@ -30,9 +31,13 @@ const Main = () => {
 
   return(
     <>
-    <Header />
     {sampleArray && sampleArray.map((i) => {
-      return <div key={i.id}>{i.symbol}</div>
+      return (
+      <div key={i.id}>
+        <p>{i.name}</p>
+        <p>{i.current_price}</p>
+        <p>{i.dayChange}</p>
+      </div>)
     })}
     </>
   )

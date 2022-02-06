@@ -7,7 +7,7 @@ type Children = {
 
 const PublicRoute =  ({children}:Children) => {
     let { isAuthenticated } = useUserAuth();
-    return isAuthenticated?<Navigate to='/dashboard' />:children;
+    return isAuthenticated?<Navigate to='/market' />:children;
 }
     
 export default PublicRoute;
