@@ -1,12 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 //Import Routes
-
-import getRoutes from './routes/gets/getDataRoutes'
+import getRoutes from './routes/markets/getMarketData'
+import userRoutes from './routes/users/postNewUser'
 
 dotenv.config()
 const app = express();
@@ -14,9 +13,13 @@ const app = express();
  app.use(bodyParser.json({limit: '120kb'}));
  app.use(bodyParser.urlencoded({limit: '120kb', extended: true}));
 
+let PORT = process.env.PORT || 8000;
 
- app.use('/API/', getRoutes);
+app.get('/', (req, res,  next) => {
+    res.status(200).send('PING');
+})
 
- let PORT = process.env.PORT || 8000;
-
- app.listen(PORT)
+//Routing
+app.use('/API/markets/', getRoutes);
+app.use('/API/users/', userRoutes)
+app.listen(PORT)
