@@ -1,13 +1,11 @@
 import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useState} from 'react' 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../Services/Firebase/firebaseConfig';
+import { signUp } from '../../Services/Firebase/firebaseMethods'
 
 const Signup = () => {
     const [ error, setError ] = useState<string>();
     const [ loading, setLoading ] = useState<boolean>(false);
-
     const handleSubmit = (e:any) => {
         e.preventDefault();
         
@@ -20,9 +18,8 @@ const Signup = () => {
         }
 
         setLoading(true);
-        createUserWithEmailAndPassword(auth, e.target[0].value, e.target[1].value).catch((err) =>   {
-            return setError(err.message);
-        })  
+        // TODO: Error Handling Here... 
+        signUp(e.target[0].value, e.target[1].value)
         setLoading(false);
     }
 
