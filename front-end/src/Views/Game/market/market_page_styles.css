@@ -2,6 +2,7 @@
 
 #watchlist_wrapper  {
     margin: 0;
+    overflow: scroll;
 
 }
 
@@ -50,7 +51,7 @@
 
 .coin_image  > img{
     width: 2.2rem;
-    height: 100%;
+    height: auto;
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 1rem;
