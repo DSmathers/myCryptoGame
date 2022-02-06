@@ -20,7 +20,7 @@ const TopTenTable = () => {
     }, 30000);
 
     useEffect(() => {
-        if(!url){throw 'api address not defined'}
+        if(!url){throw new Error("API Fetch Unsucessful")}
         axios
             .get(url)
             .then(res => {
@@ -33,7 +33,7 @@ const TopTenTable = () => {
                 setError(err);
                 console.log(err)
             })
-    }, [timeInterval, error])
+    }, [timeInterval, error, url])
   return (
       <table id="market_table">
           <thead>

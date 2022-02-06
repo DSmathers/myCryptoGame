@@ -7,7 +7,7 @@ const Coin = ({id, image, name, market_cap, market_cap_rank, symbol, current_pri
         <>
           <td className="coin_rank" key={id + 'rank'}>{market_cap_rank}</td>
           <td className="coin_image" key={id + 'img'}>
-              <img src={image} /> {name} 
+              <img src={image} alt={`${name} logo`} /> {name} 
             </td>
         {/*   <td className="coin_symbol" key={id + 'symbol'}>{symbol}</td>
           <td className="coin_name" key={id + 'name'}>{name}</td> */}
