@@ -1,0 +1,57 @@
+@import url('../../../index.css');
+
+#watchlist_wrapper  {
+    margin: 0;
+
+}
+
+#watchlist_header   {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: .2rem;
+    margin-left: 10%;
+    padding: 10px;
+}
+
+#market_table   {
+    margin-left: auto;
+    margin-right: auto;
+    overflow: scroll;
+}
+
+#market_table > thead  {
+    height: 50px;
+}
+
+#market_table > thead > tr > th {
+    border: 1px solid black;
+    text-align: center;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+}
+
+
+#market_table > tbody > tr {
+    height: 50px;
+}
+
+
+#market_table >tbody > tr > td {
+    text-align: center;
+    border: 1px solid black;
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+}
+
+.coin_image {
+    text-align: left !important
+}
+
+
+.coin_image  > img{
+    width: 2.2rem;
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 1rem;
+}

@@ -5,9 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Login from './Components/login-form/Login';
 import Signup from './Components/signup-form/Signup';
 import PublicRoute from './Routes/PublicRoute';
-import MarketTab from './Views/Game/components/market/MarketTab';
-import Watchlist from './Views/Game/components/watchlist/Watchlist';
-import Wallet from './Views/Game/components/wallet/Wallet';
+import MarketTab from './Views/Game/market/MarketTab';
+import Watchlist from './Views/Game/watchlist/Watchlist';
+import Wallet from './Views/Game/wallet/Wallet';
 import Header from './Components/Main_Header/Header';
 
 

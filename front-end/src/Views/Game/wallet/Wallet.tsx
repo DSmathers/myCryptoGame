@@ -1,4 +1,4 @@
-import { useUserAuth } from "../../../../Contexts/AuthContext";
+import { useUserAuth } from "../../../Contexts/AuthContext";
 
 const Wallet = () => {
     const { User } = useUserAuth() 
