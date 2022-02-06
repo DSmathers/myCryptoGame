@@ -6,6 +6,6 @@ You might be wondering why I would use Firebase for Auth but not their noSQL dat
 
 ## TODO
 
-- [] Connect to database
-- [] Write a function to generate a new user wallet when they sign up
+- [x] Connect to database
+- [x] Write a function to generate a new user wallet when they sign up
 - [] Connect to client and test current progress before moving forward. 
