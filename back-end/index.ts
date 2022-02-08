@@ -3,9 +3,13 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
+
+
+
 //Import Routes
 import getRoutes from './routes/markets/getMarketData'
 import userRoutes from './routes/users/postNewUser'
+import testRoute from './routes/users/getUserWalletInfo'
 
 dotenv.config()
 const app = express();
@@ -21,5 +25,6 @@ app.get('/', (req, res,  next) => {
 
 //Routing
 app.use('/API/markets/', getRoutes);
-app.use('/API/users/', userRoutes)
+app.use('/API/users/', testRoute);
+app.use('/API/users/new-user/', userRoutes)
 app.listen(PORT)

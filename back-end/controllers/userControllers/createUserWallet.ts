@@ -1,8 +1,9 @@
-import express, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import addNewUser from '../../services/database/addNewUser';
 import { lookupUser } from '../../services/database/helpers';
 
 export const createUserWallet = async(req:Request, res:Response) => {
+    // TODO: Update this to JWT method instead of directly sending uid. 
     let newUid = req.params.uid;
     let alreadyExists = await lookupUser(newUid);
     if(alreadyExists){

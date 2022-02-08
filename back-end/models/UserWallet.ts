@@ -4,9 +4,9 @@ interface User {
     uid: string,
     // Supported Coins Goes Here...
     usd: number,
-    btc: number,
-    eth: number,
-    algo: number
+    btc?: number,
+    eth?: number,
+    algo?: number
 }
 
 const walletSchema = new mongoose.Schema<User>({
