@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import { createUserWithEmailAndPassword, User } from 'firebase/auth';
 import { auth } from './firebaseConfig';
+import { useState } from 'react';
 
 
 export function placeHolder (){
@@ -20,3 +20,18 @@ export function signUp(username:string,  password:string){
     })
     return;
 }
+
+
+export function getUserToken(){
+    const { currentUser } = auth
+    const token = currentUser?.getIdToken(true)
+    return token
+      /*   .then((idToken) => {
+            return idToken;
+            
+        })
+        .catch((error) => {
+            throw new Error(error)
+        }) */
+    
+};
