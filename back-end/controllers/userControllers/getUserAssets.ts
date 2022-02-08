@@ -21,7 +21,7 @@ export const getUserAssets = (req:Request, res:Response) => {
                 if(!data){throw new Error('Error: Something went wrong.')}
                 else {
                     let trimmedData = JSON.stringify(data, replacer);
-                    return res.status(200).json(trimmedData);
+                    return res.status(200).json(JSON.parse(trimmedData));
                 }})
         .catch((error) => {throw new Error(error)});
     });
