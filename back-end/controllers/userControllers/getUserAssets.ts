@@ -9,9 +9,12 @@ function replacer(key:string,value:any){
 };
 
 export const getUserAssets = (req:Request, res:Response) => {
-    let token = req.body.data.token;
+    let newToken:string | undefined = req.headers.authorization
+    if(!newToken){
+        throw new Error('No Token Recieved')
+    };
     admin.auth()
-        .verifyIdToken(token)
+        .verifyIdToken(newToken)
         .then((decodedToken) => {
             const uid = decodedToken.uid;
             getUserWallet(uid).then((data) => {

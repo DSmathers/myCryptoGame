@@ -3,6 +3,6 @@ import { getUserAssets } from '../../controllers/userControllers/getUserAssets'
 
 const router = express.Router()
 
-router.post('/user/wallet', getUserAssets);
+router.get('/user/wallet', getUserAssets);
 
 export default router;
