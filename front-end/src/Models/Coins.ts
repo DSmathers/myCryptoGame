@@ -8,3 +8,10 @@ export interface Coins {
     name: string,
     symbol: string
   }
+
+
+  export interface CoinDetails {
+    name: string,
+    price: number,
+    market_cap: number,
+  }

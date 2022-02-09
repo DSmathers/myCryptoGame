@@ -20,6 +20,11 @@
     overflow: scroll;
 }
 
+.market_table_row:hover{
+    cursor: pointer;
+    background-color: var(--light-grey)
+}
+
 #market_table > thead  {
     height: 50px;
 }

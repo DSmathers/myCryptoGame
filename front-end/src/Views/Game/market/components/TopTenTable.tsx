@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Coins } from '../../../../Models/Coins';
 import Coin from './Coin';
 
 
-const TopTenTable = () => {
+const TopTenTable = ({setSelectedCoin}:any) => {
     const [ coins, setCoins ] = useState<Coins[]>()
     const [ error, setError ] = useState(false)
 
@@ -14,6 +14,10 @@ const TopTenTable = () => {
     // URL Endpoint for relevant data /API/markets/get-top-ten
     let url: string | undefined = process.env.REACT_APP_TOP_TEN_ENDPOINT;
 
+    const handleClick = (e:React.MouseEvent | React.KeyboardEvent) => {
+        e.preventDefault();
+        return setSelectedCoin(e.currentTarget.id);
+    }
 
     setTimeout(() => {
         setTimeInterval(timeInterval + 1)
@@ -48,7 +52,7 @@ const TopTenTable = () => {
           <tbody>
         {coins && coins.map(coin => {
             return(
-                <tr key={coin.id + 'row'}>
+                <tr key={coin.id + 'row'} onClick={handleClick} id={coin.id} className="market_table_row">
                     <Coin
                         id={coin.id}
                         current_price={coin.current_price}
