@@ -63,11 +63,11 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
 
             <section id="selectedCoin_marketData">
             <header id="selectedCoinModal_MarketSection_header">Market Data</header>
-            <p>Market Cap: ${coinData?.market_data.market_cap.usd.toLocaleString()}</p>
-            <p>All Time High: ${coinData?.market_data.ath.usd.toLocaleString()}</p>
-            <p>All Time High Date: {getDate(coinData?.market_data.ath_date.usd).toLocaleDateString()}</p>
-            <p>Circulating Supply: {coinData?.market_data.circulating_supply.toLocaleString()}</p>
-            <p>Max Supply: {coinData?.market_data.total_supply.toLocaleString()}</p>
+            {coinData?.market_data.market_cap.usd && <p>Market Cap: ${coinData?.market_data.market_cap.usd.toLocaleString()}</p>}
+            {coinData?.market_data.ath.usd && <p>All Time High: ${coinData?.market_data.ath.usd.toLocaleString()}</p>}
+            {coinData?.market_data.ath_date.usd && <p>All Time High Date: {getDate(coinData.market_data.ath_date.usd).toLocaleDateString()}</p>}
+            {coinData?.market_data.circulating_supply && <p>Circulating Supply: {coinData.market_data.circulating_supply.toLocaleString()}</p>}
+            {coinData?.market_data.total_supply && <p>Max Supply: {coinData.market_data.total_supply.toLocaleString()}</p>}
             </section>
             
             </>:<>Loading....</>}
