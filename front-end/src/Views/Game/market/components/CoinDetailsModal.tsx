@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { Modal } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 import { useState } from 'react'
 
 
 const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
    const [ coinData, setCoinData ]: null | any = useState(null);
-  
+
     const getCoinDetails = async() => {
         await axios.get('https://api.coingecko.com/api/v3/coins/'+selectedCoin).then((res) => {
             if(res.status === 200){
                 setCoinData(res.data);  
-                console.log(res.data.market_data)
+                //console.log(res.data)
+                //console.log(res.data.market_data)
             }
             else {throw new Error(res.statusText)}
             
@@ -19,42 +20,62 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
         });
     };
 
+    const getDate = (dateString:Date) => {
+        return new Date(dateString);
+    }
+
+   
+
     // Note to self: This is the text description of the selected cryptocurrency. I needed
     // to use (i think) a weird method (to me) to make the <a> tags actually render... 
     const parser = new DOMParser();
     let parsed = parser.parseFromString(coinData?.description.en, "text/html")
-    let justHoldingThisHere = <p dangerouslySetInnerHTML={{ __html: parsed.body.innerHTML}}></p>
+    let coinDescription = <p dangerouslySetInnerHTML={{ __html: parsed.body.innerHTML}}></p>
 
   return (
-    <Modal show={selectedCoin?true:false} fullscreen='lg-down' centered onShow={()=>{getCoinDetails()}} onHide={()=>{setSelectedCoin(null)}}>
+    <Modal show={selectedCoin?true:false} fullscreen centered onShow={()=>{getCoinDetails()}} onHide={()=>{setSelectedCoin(null)}}>
         <Modal.Header closeButton>
-        
-            {coinData? 
-            <div>
+            <h4 style={{margin: "auto"}}>
+                {coinData?.symbol.toUpperCase()} ${coinData?.market_data.current_price.usd.toLocaleString()}
+            </h4>
+        </Modal.Header>
+            
+        <Modal.Body style={{overflowY: 'auto'}}>
+
+            {coinData?<>
+            <section id="selectedCoin_topSection">
                 <p>{coinData?.name} price</p>
                 <p>${coinData?.market_data.current_price.usd.toLocaleString()}</p>
                 <p>${coinData?.market_data.price_change_24h_in_currency.usd.toLocaleString()} ({coinData.market_data.price_change_percentage_24h_in_currency.usd.toFixed(2)}%)</p>
-            </div>:<></>}
-        </Modal.Header>
-        <Modal.Body style={{overflowY: 'auto'}}>
-            <div>
-                // Price Chart Box / Div Goes Here //
-            </div>
-            <div> // Market Data Section Goes Here // 
-            {/* Market Data Values
-                TODO: Decide which values to add for initial launch and make it pretty.
-                can always add more later.  */}
-            
-            </div>
-            <div>
-                {/* The parsed html string mentioned above.(Text details about selected currency) */}
-                {justHoldingThisHere}    
-            </div>
-            
+            </section>
 
+            <section id="selectedCoin_priceChart">
+                // Price Chart Box / Div Goes Here //
+                <canvas id="selectedCoin_chart"></canvas>
+            </section>
+
+            <section id="selected_coin_overview">
+                {/* TOO: Add a read more button to expand/shrink this description for a better UX */}
+                <header className="selectedCoinModal_section_header" id="selectedCoinModal_AboutSection_header">About {coinData?.name}</header>
+                {/* The parsed html string mentioned above.(Text details about selected currency) */}
+                {coinDescription}    
+            </section>
+
+            <section id="selectedCoin_marketData">
+            <header id="selectedCoinModal_MarketSection_header">Market Data</header>
+            <p>Market Cap: ${coinData?.market_data.market_cap.usd.toLocaleString()}</p>
+            <p>All Time High: ${coinData?.market_data.ath.usd.toLocaleString()}</p>
+            <p>All Time High Date: {getDate(coinData?.market_data.ath_date.usd).toLocaleDateString()}</p>
+            <p>Circulating Supply: {coinData?.market_data.circulating_supply.toLocaleString()}</p>
+            <p>Max Supply: {coinData?.market_data.total_supply.toLocaleString()}</p>
+            </section>
+            
+            </>:<>Loading....</>}
+            
         </Modal.Body>
+
         <Modal.Footer>
-            // Buy / Sell / Trade Links Go Here //
+            <Button variant="">Add to Watchlist</Button><Button variant="danger">Trade</Button>
         </Modal.Footer>
     </Modal>
   );

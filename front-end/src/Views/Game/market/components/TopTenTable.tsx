@@ -14,7 +14,7 @@ const TopTenTable = ({setSelectedCoin}:any) => {
     // URL Endpoint for relevant data /API/markets/get-top-ten
     let url: string | undefined = process.env.REACT_APP_TOP_TEN_ENDPOINT;
 
-    const handleClick = (e:React.MouseEvent | React.KeyboardEvent) => {
+    const handleCoinSelect = (e:React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
         return setSelectedCoin(e.currentTarget.id);
     }
@@ -52,7 +52,7 @@ const TopTenTable = ({setSelectedCoin}:any) => {
           <tbody>
         {coins && coins.map(coin => {
             return(
-                <tr key={coin.id + 'row'} onClick={handleClick} id={coin.id} className="market_table_row">
+                <tr key={coin.id + 'row'} onClick={handleCoinSelect} id={coin.id} className="market_table_row">
                     <Coin
                         id={coin.id}
                         current_price={coin.current_price}
