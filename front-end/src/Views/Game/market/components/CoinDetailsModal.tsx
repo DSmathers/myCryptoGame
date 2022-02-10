@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap'
 import { useState } from 'react'
+import { useNavigate } from 'react-router';
 
 
 const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
    const [ coinData, setCoinData ]: null | any = useState(null);
+   const navigate = useNavigate();
 
     const getCoinDetails = async() => {
         await axios.get('https://api.coingecko.com/api/v3/coins/'+selectedCoin).then((res) => {
@@ -75,7 +77,7 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
         </Modal.Body>
 
         <Modal.Footer>
-            <Button variant="">Add to Watchlist</Button><Button variant="danger">Trade</Button>
+            <Button variant="">Add to Watchlist</Button><Button onClick={() => navigate('/')} variant="danger">Trade</Button>
         </Modal.Footer>
     </Modal>
   );

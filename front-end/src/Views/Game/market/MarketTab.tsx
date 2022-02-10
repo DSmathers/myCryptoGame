@@ -11,6 +11,7 @@ const MarketTab = () => {
     <div id="watchlist_wrapper">
       <header id = "watchlist_header"> Top 10 By Market Cap </header>
       <TopTenTable setSelectedCoin={setSelectedCoin} />
+      {/* If there is a coin selected, the information is passed to the modal and it's shown */}
       {selectedCoin && <CoinDetailsModal selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} />}
     </div>
   )

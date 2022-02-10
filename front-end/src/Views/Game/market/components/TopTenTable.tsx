@@ -1,43 +1,45 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { Alert } from 'react-bootstrap';
 import { Coins } from '../../../../Models/Coins';
 import Coin from './Coin';
 
 
 const TopTenTable = ({setSelectedCoin}:any) => {
     const [ coins, setCoins ] = useState<Coins[]>()
-    const [ error, setError ] = useState(false)
-
-    //Timeout function to set intervals between API calls and update watchlist.
-    const [ timeInterval, setTimeInterval ] = useState(0);
-
-    // URL Endpoint for relevant data /API/markets/get-top-ten
-    let url: string | undefined = process.env.REACT_APP_TOP_TEN_ENDPOINT;
+    const [ error, setError ] = useState<Error>()
 
     const handleCoinSelect = (e:React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
         return setSelectedCoin(e.currentTarget.id);
     }
 
-    setTimeout(() => {
-        setTimeInterval(timeInterval + 1)
-    }, 30000);
-
     useEffect(() => {
-        if(!url){throw new Error("API Fetch Unsucessful")}
-        axios
-            .get(url)
-            .then(res => {
-                setCoins(res.data)
-                if(res.status !== 200){
-                    setError(true)
-                }
-            })
-            .catch(err => {
-                setError(err);
-                console.log(err)
-            })
-    }, [timeInterval, error, url])
+        fetchTopTen();
+        let timer = setInterval(fetchTopTen, 30000)
+        function fetchTopTen(){
+            // URL Endpoint for relevant data /API/markets/get-top-ten
+            let url: string | undefined = process.env.REACT_APP_TOP_TEN_ENDPOINT;
+            if(!url){throw new Error("URL not defined.")}
+            axios
+                .get(url)
+                .then(res => {
+                    setCoins(res.data)
+                    if(res.status !== 200){
+                        clearInterval(timer)
+                        setError(new Error('Error getting data from API.'))
+                    }
+                })
+                .catch(err => {
+                    setError(err);
+                    console.log(err);
+                    clearInterval(timer);
+                });
+        };
+        return () => clearInterval(timer);
+    }, [])
+
+
   return (
       <table id="market_table">
           <thead>
@@ -50,6 +52,7 @@ const TopTenTable = ({setSelectedCoin}:any) => {
             </tr>
           </thead>
           <tbody>
+              {error && <Alert variant="danger">{error.message}</Alert>}
         {coins && coins.map(coin => {
             return(
                 <tr key={coin.id + 'row'} onClick={handleCoinSelect} id={coin.id} className="market_table_row">
