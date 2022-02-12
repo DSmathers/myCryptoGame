@@ -1,7 +1,7 @@
 const Main = () => {
   return(
     <>
-      <h1>Main Landing Page</h1>
+      <h1>Main Landing Page </h1>
     </>
   )
 };
