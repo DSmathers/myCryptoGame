@@ -17,3 +17,17 @@
     border-color: var(--dark-grey);
     color: var(--off-white)
 }
+
+#logout_btn {
+    background-color: var(--orange);
+}
+
+#nav_logout_btn {
+    margin-left: auto;
+    margin-right: auto;
+}
+#header-nav-auth    {
+    align-items: center;
+    justify-content:center ;
+}
+

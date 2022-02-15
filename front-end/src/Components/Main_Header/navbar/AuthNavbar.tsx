@@ -20,8 +20,8 @@ const AuthNavbar = () => {
                 <Nav.Link href="/watchlist">Watchlist</Nav.Link>
             </Nav>
             <NavDropdown.Divider style={{color: 'white'}} />
-            <Nav className="m-1">
-               <Nav.Item>
+            <Nav className="m-1" id="header_nav_auth">
+               <Nav.Item id="nav_logout_btn">
                    <Button onClick={handleLogout} variant="primary-outline" id="logout_btn">Log Out</Button>
                </Nav.Item>
             </Nav>
