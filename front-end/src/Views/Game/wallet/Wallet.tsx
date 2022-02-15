@@ -18,7 +18,7 @@ const Wallet = () => {
     };
     axios.get('http://192.168.0.4:8000/api/users/user/wallet', ({headers: {authorization: token}}))
       .then((res) => {
-        setAssets(res.data);
+        setAssets(res.data.wallet);
       });
   };
 
