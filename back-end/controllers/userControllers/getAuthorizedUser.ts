@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import admin from '../../services/auth/firebaseConfig'
-import { getUserWallet } from "../../services/database/helpers";
+import { getUser } from "../../services/database/helpers";
 
 function replacer(key:string,value:any){
     if(key=='_id') return undefined;
@@ -8,7 +8,7 @@ function replacer(key:string,value:any){
     else return value;
 };
 
-export const getUserAssets = (req:Request, res:Response) => {
+export const getAuthorizedUser = (req:Request, res:Response) => {
     let newToken:string | undefined = req.headers.authorization
     if(!newToken){
         throw new Error('No Token Recieved')
@@ -17,9 +17,10 @@ export const getUserAssets = (req:Request, res:Response) => {
         .verifyIdToken(newToken)
         .then((decodedToken) => {
             const uid = decodedToken.uid;
-            getUserWallet(uid).then((data) => {
+            getUser(uid).then((data) => {
                 if(!data){throw new Error('Error: Something went wrong.')}
                 else {
+                    // Trims object id hash and version key from the data before sending to client
                     let trimmedData = JSON.stringify(data, replacer);
                     return res.status(200).json(JSON.parse(trimmedData));
                 }})

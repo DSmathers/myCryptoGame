@@ -1,8 +1,6 @@
-import { response } from 'express';
 import mongoose from 'mongoose';
 import User from '../../models/UserWallet';
 
-const connectionURL = process.env.DB_CONNECTION_URL;
 
 export const lookupUser = async (id:string) => {
     let doesExist = false;
@@ -19,14 +17,14 @@ export const lookupUser = async (id:string) => {
     return doesExist
 };
 
-export const getUserWallet = async (id:string) => {
+export const getUser = async (id:string) => {
     const connectionURL = process.env.DB_CONNECTION_URL;
     mongoose.connect(connectionURL?connectionURL:'').catch(error => console.log(error))
-    let userData = User.where({uid:id});
-    let userWallet = await userData.findOne().then((user) => {
+    let query = User.where({uid:id});
+    let userData = await query.findOne().then((user) => {
         return user;
     }).catch((error) => {
         throw new Error(error);
     });
-    return userWallet;
+    return userData;
 }

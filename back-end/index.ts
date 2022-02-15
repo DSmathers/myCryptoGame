@@ -4,12 +4,10 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 
-
-
 //Import Routes
 import getRoutes from './routes/markets/getMarketData'
-import userRoutes from './routes/users/postNewUser'
-import testRoute from './routes/users/getUserWalletInfo'
+import createNewUser from './routes/users/postNewUser'
+import getUserData from './routes/users/getUserDataRoutes'
 
 dotenv.config()
 const app = express();
@@ -25,6 +23,8 @@ app.get('/', (req, res,  next) => {
 
 //Routing
 app.use('/API/markets/', getRoutes);
-app.use('/API/users/', testRoute);
-app.use('/API/users/new-user/', userRoutes)
+app.use('/API/users/', getUserData);
+app.use('/API/users/new-user/', createNewUser);
+
+
 app.listen(PORT)
