@@ -1,7 +1,13 @@
-import React from 'react';
+import { useUserContext } from '../Game'
 
 const Watchlist = () => {
-  return <div>Watchlist</div>;
-};
+  const userData = useUserContext();
+  
+  return ( 
+    <>
+      <h2>Watchlist Tab</h2>
+    </>
+  )
+}
 
 export default Watchlist;

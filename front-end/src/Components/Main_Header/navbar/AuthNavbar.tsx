@@ -1,9 +1,11 @@
 import React from 'react';
 import { Navbar, Container, Nav, Button, NavDropdown } from 'react-bootstrap'
+import { useNavigate } from 'react-router';
 import { useUserAuth } from '../../../Contexts/AuthContext';
 
 const AuthNavbar = () => {
     const { logOut } = useUserAuth();
+    const navigate = useNavigate();
     const handleLogout = (e:React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
         logOut();
@@ -15,9 +17,9 @@ const AuthNavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" id="main_navbar_toggle" />
         <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="m-auto text-center" id="main_navbar_links">
-                <Nav.Link href="/market">Market</Nav.Link>
-                <Nav.Link href="/wallet">Wallet</Nav.Link>
-                <Nav.Link href="/watchlist">Watchlist</Nav.Link>
+                <Nav.Link onClick={()=>navigate('/market')}>Market</Nav.Link>
+                <Nav.Link onClick={()=>navigate('/wallet')}>Wallet</Nav.Link>
+                <Nav.Link onClick={()=>navigate('/watchlist')}>Watchlist</Nav.Link>
             </Nav>
             <NavDropdown.Divider style={{color: 'white'}} />
             <Nav className="m-1" id="header_nav_auth">
