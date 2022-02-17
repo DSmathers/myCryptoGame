@@ -8,22 +8,19 @@ function replacer(key:string,value:any){
     else return value;
 };
 
-export const getAuthorizedUser = (req:Request, res:Response) => {
+export const getAuthorizedUser = async (req:Request, res:Response) => {
     let newToken:string | undefined = req.headers.authorization
     if(!newToken){
         throw new Error('No Token Recieved')
     };
-    admin.auth()
+    await admin.auth()
         .verifyIdToken(newToken)
         .then((decodedToken) => {
             const uid = decodedToken.uid;
             getUser(uid).then((data) => {
-                if(!data){throw new Error('Error: Something went wrong.')}
-                else {
-                    // Trims object id hash and version key from the data before sending to client
-                    let trimmedData = JSON.stringify(data, replacer);
-                    return res.status(200).json(JSON.parse(trimmedData));
-                }})
+                // Trims object id hash and version key from the data before sending to client
+                let trimmedData = JSON.stringify(data, replacer);
+                return res.status(200).json(JSON.parse(trimmedData))})
         .catch((error) => {throw new Error(error)});
     });
 }

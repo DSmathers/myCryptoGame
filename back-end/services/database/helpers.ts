@@ -38,5 +38,4 @@ export const addtoWatchlist = async (id:string, coin:string) => {
     query.findOneAndUpdate({uid:id}, {$addToSet: {watchlist: coin}}, {}, (err, data) => {
         if(err){console.log(err)}
     })
-    console.log(query)
 }
