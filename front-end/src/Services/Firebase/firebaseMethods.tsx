@@ -11,7 +11,7 @@ export async function signUp(username:string,  password:string){
     })
     .then(() => {
         let uid = auth.currentUser?.uid;
-        !url?() => {throw new Error('Failed to fetch user creation endpoint')}:
+        if(!url){throw new Error('Error while fetching add user endpoint.')}
         axios.post(url+uid)
         .catch((error) => {return error})
     })
