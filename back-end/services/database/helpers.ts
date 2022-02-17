@@ -1,3 +1,4 @@
+import { connect } from 'http2';
 import mongoose from 'mongoose';
 import User from '../../models/UserWallet';
 
@@ -27,4 +28,15 @@ export const getUser = async (id:string) => {
         throw new Error(error);
     });
     return userData;
+}
+
+
+export const addtoWatchlist = async (id:string, coin:string) => {
+    const connectionURL = process.env.DB_CONNECTION_URL;
+    mongoose.connect(connectionURL?connectionURL:'').catch(error => console.log(error))
+    let query = User.where({uid:id});
+    query.findOneAndUpdate({uid:id}, {$addToSet: {watchlist: coin}}, {}, (err, data) => {
+        if(err){console.log(err)}
+    })
+    console.log(query)
 }
