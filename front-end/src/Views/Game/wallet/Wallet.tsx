@@ -2,14 +2,11 @@ import { useUserAuth } from "../../../Contexts/AuthContext";
 import { useUserContext } from "../Game";
 
 const Wallet = () => {
-  const userData = useUserContext();
-  const { User } = useUserAuth();
-  console.log(userData)
+  const { userData } = useUserContext();
   return(
       <>
         <div>Wallet</div> 
-        <div>User: {User && User.email}</div>
-        <div>USD: {userData && userData.wallet.usd}</div>
+        <div>USD: ${userData?.wallet.usd.toLocaleString()}</div>
       </>
   );
 };

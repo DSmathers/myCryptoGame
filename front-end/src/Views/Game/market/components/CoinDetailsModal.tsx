@@ -1,12 +1,17 @@
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-
+import { useUserContext } from '../../Game';
 
 const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
-   const [ coinData, setCoinData ]: null | any = useState(null);
-   const navigate = useNavigate();
+    const [ coinData, setCoinData ]: null | any = useState(null);
+    const { addToWatchlist } = useUserContext();
+    const navigate = useNavigate();
+
+    const handleAddToWatchlist = (e:React.KeyboardEvent | React.MouseEvent) => {
+       return addToWatchlist(coinData.id)
+   };
 
     const getCoinDetails = async() => {
         await axios.get('https://api.coingecko.com/api/v3/coins/'+selectedCoin).then((res) => {
@@ -77,7 +82,7 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
         </Modal.Body>
 
         <Modal.Footer>
-            <Button variant="">Add to Watchlist</Button><Button onClick={() => navigate('/')} variant="danger">Trade</Button>
+            <Button variant="" onClick={handleAddToWatchlist}>Add to Watchlist</Button><Button onClick={() => navigate('/')} variant="danger">Trade</Button>
         </Modal.Footer>
     </Modal>
   );
