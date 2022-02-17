@@ -20,6 +20,7 @@ const TopTenTable = ({setSelectedCoin}:any) => {
         function fetchTopTen(){
             // URL Endpoint for relevant data /API/markets/get-top-ten
             let url: string | undefined = process.env.REACT_APP_TOP_TEN_ENDPOINT;
+            console.log(url)
             if(!url){throw new Error("URL not defined.")}
             const unsub = axios
                 .get(url)

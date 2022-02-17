@@ -45,7 +45,6 @@ const Game = () => {
 
 
   return (
-    loading?<Loading />:
     width < breakpoint?<GameLayoutMobile userContext={context} />:<GameLayout userContext={context} />
   )
 }
