@@ -20,7 +20,7 @@ const Game = () => {
     const url = process.env.REACT_APP_ADD_TO_WATCHLIST_ENDPOINT
     if(!token){throw new Error('Authorization Error')}
     if(!url){throw new Error('Error fetching URL')}
-    await axios.patch('http://192.168.0.4:8000/api/users/user/watchlist', ({data: coinId}), ({headers: {authorization: token}})).then((res) => {
+    await axios.patch(url, ({data: coinId}), ({headers: {authorization: token}})).then((res) => {
     console.log(res.status)}).catch((error) => {throw new Error(error)}).finally(() => getUserData())
   };
 

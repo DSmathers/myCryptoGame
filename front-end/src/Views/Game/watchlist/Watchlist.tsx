@@ -3,7 +3,6 @@ import { useUserContext } from '../Game'
 
 const Watchlist = () => {
   const { userData, removeFromWatchlist } = useUserContext();
-
   const handleRemoveFromWatchlist = (e:React.KeyboardEvent | React.MouseEvent) => {
     e.preventDefault();
     return removeFromWatchlist(e.currentTarget.id)
