@@ -10,7 +10,7 @@ router.get('/', getAuthorizedUser);
 
 
 // Add to watchlist endpoint.
-router.patch('/watchlist', (req, res) => {
+router.patch('/watchlist/add', (req, res) => {
     if(req){
         const token = req.headers.authorization;
         const coin = req.body.data
