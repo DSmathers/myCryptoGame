@@ -7,6 +7,7 @@ const Wallet = () => {
       <>
         <div>Wallet</div> 
         <div>USD: ${userData?.wallet.usd.toLocaleString()}</div>
+        {userData?.wallet.algo && <div>ALGO: {userData.wallet.algo.toFixed(8)}</div>}
       </>
   );
 };

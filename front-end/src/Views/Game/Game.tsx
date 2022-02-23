@@ -17,14 +17,25 @@ const Game = () => {
 
   const addToWatchlist = async (coinId:string) => {
     const token = await getUserToken();
+    const url = process.env.REACT_APP_ADD_TO_WATCHLIST_ENDPOINT
     if(!token){throw new Error('Authorization Error')}
+    if(!url){throw new Error('Error fetching URL')}
     await axios.patch('http://192.168.0.4:8000/api/users/user/watchlist', ({data: coinId}), ({headers: {authorization: token}})).then((res) => {
+    console.log(res.status)}).catch((error) => {throw new Error(error)}).finally(() => getUserData())
+  };
+
+  const removeFromWatchlist = async (coinId:string) => {
+    const token = await getUserToken();
+    const url = process.env.REACT_APP_RM_FROM_WATCHLIST_ENDPOINT
+    if(!token){throw new Error('Authorization Error')}
+    if(!url){throw new Error('URL fetch unsuccessful')}
+    await axios.patch(url, ({data: coinId}), ({headers: {authorization: token}})).then((res) => {
     console.log(res.status)}).catch((error) => {throw new Error(error)}).finally(() => getUserData())
   };
 
   const getUserData = async () => {
     setLoading(true);
-    let url = process.env.REACT_APP_GET_WATCHLIST
+    let url = process.env.REACT_APP_GET_USER
     const token = await getUserToken();
     if(!token){throw new Error('Authorization Failed')}
     if(!url){throw new Error('Failed to fetch watchlist data')}
@@ -40,7 +51,8 @@ const Game = () => {
     const context = {
       userData,
       getUserData,
-      addToWatchlist
+      addToWatchlist,
+      removeFromWatchlist
     }
 
 
@@ -54,17 +66,12 @@ export default Game
 interface UserContext {
   userData:User | null,
   getUserData: FunctionExpression,
-  addToWatchlist: Function
+  addToWatchlist: Function,
+  removeFromWatchlist: Function
 }
 export function useUserContext() {
   return useOutletContext<UserContext>();
 }
 
 
-/* export const addToWatchlist = async (coinId:string) => {
-  const token = await getUserToken();
-  if(!token){throw new Error('Authorization Error')}
-  await axios.patch('http://192.168.0.4:8000/api/users/user/watchlist', ({data: coinId}), ({headers: {authorization: token}})).then((res) => {
-  console.log(res.status)}).catch((error) => {throw new Error(error)})
-}; */
 
