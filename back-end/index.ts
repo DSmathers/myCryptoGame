@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 //Import Routes
 import getRoutes from './routes/markets/getMarketData'
 import createNewUser from './routes/users/postNewUser'
-import getUserData from './routes/users/getUserDataRoutes'
+import userRoutes from './routes/users/userRoutes'
 
 dotenv.config()
 const app = express();
@@ -23,7 +23,7 @@ app.get('/', (req, res,  next) => {
 
 //Routing
 app.use('/API/markets/', getRoutes);
-app.use('/API/users/', getUserData);
+app.use('/API/users/user', userRoutes);
 app.use('/API/users/new-user/', createNewUser);
 
 

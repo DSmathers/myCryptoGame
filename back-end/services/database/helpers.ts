@@ -39,3 +39,13 @@ export const addtoWatchlist = async (id:string, coin:string) => {
         if(err){console.log(err)}
     })
 }
+
+
+export const removeFromWatchlist = async (id:string, coin:string) => {
+    const connectionURL = process.env.DB_CONNECTION_URL;
+    mongoose.connect(connectionURL?connectionURL:'').catch(error => console.log(error))
+    let query = User.where({uid:id})
+    query.findOneAndUpdate({uid: id}, {$pull: {watchlist: coin}}, {}, (err, data) => {
+        if(err){console.log(err)}
+    })
+};
