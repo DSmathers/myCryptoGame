@@ -2,8 +2,9 @@ import { Request, Response } from "express";
 import admin from '../../services/auth/firebaseConfig'
 import { getUser } from "../../services/database/helpers";
 
-function replacer(key:string,value:any){
+export function replacer(key:string,value:any){
     if(key=='_id') return undefined;
+    else if(key=='uid') return undefined;
     else if(key=='__v') return undefined;
     else return value;
 };

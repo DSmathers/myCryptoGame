@@ -1,13 +1,11 @@
-import mongoose, { Date } from 'mongoose'
+import mongoose, { Date } from 'mongoose';
+import SupportedCoins from './SupportedCoins'
 
 
 interface newUser {
     uid: string,
     wallet: {
         usd: number,
-        btc?: number,
-        eth?: number,
-        algo?: number
     },
     watchlist?: [string],
     transactions?: [{
@@ -24,18 +22,7 @@ interface newUser {
 
 const userSchema = new mongoose.Schema<newUser>({
     uid: {type: String, required: true},
-    wallet: {
-        usd: {type: Number, required: false},
-        btc: {type: Number, required: false},
-        eth: {type: Number, required: false},
-        usdt: {type: Number, required: false},
-        bnb: {type: Number, required: false},
-        usdc: {type: Number, required: false},
-        xrp: {type: Number, required: false},
-        ada: {type: Number, required: false},
-        sol: {type: Number, required: false},
-        dot: {type: Number, required: false},
-    },
+    wallet: SupportedCoins,
     watchlist: [{type: String, required: false}],
     transactions: [{
         date: {type: Date, required: true},

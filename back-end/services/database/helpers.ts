@@ -1,4 +1,4 @@
-import { connect } from 'http2';
+import axios from 'axios';
 import mongoose from 'mongoose';
 import User from '../../models/UserWallet';
 
@@ -49,3 +49,44 @@ export const removeFromWatchlist = async (id:string, coin:string) => {
         if(err){console.log(err)}
     })
 };
+
+//https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd
+export const getCurrentPrice = async (coin:string, amount:number, used:string) => {
+    let price:number = 0;
+    await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=' + coin + '&vs_currencies=' + used).then((res) => {
+        price = price + (Number(res.data[coin][used]) * amount)
+    }).catch((err) => { return new Error(err.message)})
+    return price
+}
+
+
+export const postNewTransaction = async (uid:string, assIn: string, assInNumber: number, assOut:string, assOutNum: number) => {
+    const connectionURL = process.env.DB_CONNECTION_URL;
+    mongoose.connect(connectionURL?connectionURL:'').catch(error => console.log(error))
+    let user = await User.findOne({uid:uid});
+    if(!user){return new Error('User Not Found')}
+    // Helper Function returns dot notation string. 
+    let dotNotated = (string:string) => {
+        let value:string = "wallet." + string;
+        return value;
+    }
+
+    let updateData = 
+    {
+    $inc: {
+        [dotNotated(assOut)]: -assOutNum,
+        [dotNotated(assIn)]: assInNumber
+    },
+    $addToSet: {transactions: {
+        date: new Date(),
+        summary: {
+            out_asset_id: assOut,
+            out_asset_total: assOutNum,
+            in_asset_id: assIn,
+            in_asset_total: assInNumber
+            }
+        }
+    }};
+    let doc = await User.findOneAndUpdate({uid:uid}, updateData, {new:true})
+    return doc;
+}
