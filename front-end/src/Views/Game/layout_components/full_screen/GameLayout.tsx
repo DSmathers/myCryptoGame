@@ -2,11 +2,12 @@ import { Outlet } from 'react-router-dom'
 import Header from '../../../../Components/Main_Header/Header'
 
 export default function GameLayout ({userContext}:any) {
+  const { loading } = userContext
   return (
     <>
       <Header />
       <main>
-        <Outlet context={ userContext } />
+        {loading || loading==undefined?<div>Loading...</div>:<Outlet context={ userContext } />}
       </main>
   
     </>

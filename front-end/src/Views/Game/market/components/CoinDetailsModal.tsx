@@ -6,7 +6,7 @@ import { useUserContext } from '../../Game';
 
 const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
     const [ coinData, setCoinData ]: null | any = useState(null);
-    const { addToWatchlist } = useUserContext();
+    const { addToWatchlist, setPurchaseCoin } = useUserContext();
     const navigate = useNavigate();
 
     const handleAddToWatchlist = (e:React.KeyboardEvent | React.MouseEvent) => {
@@ -17,8 +17,6 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
         await axios.get('https://api.coingecko.com/api/v3/coins/'+selectedCoin).then((res) => {
             if(res.status === 200){
                 setCoinData(res.data);  
-                //console.log(res.data)
-                //console.log(res.data.market_data)
             }
             else {throw new Error(res.statusText)}
             
@@ -29,6 +27,12 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
 
     const getDate = (dateString:Date) => {
         return new Date(dateString);
+    }
+
+    const handleBuy = (e:React.MouseEvent | React.KeyboardEvent) => {
+        setPurchaseCoin(selectedCoin)
+        setSelectedCoin(undefined)
+        navigate('/trade')
     }
 
    
@@ -82,7 +86,7 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
         </Modal.Body>
 
         <Modal.Footer>
-            <Button variant="" onClick={handleAddToWatchlist}>Add to Watchlist</Button><Button onClick={() => navigate('/')} variant="danger">Trade</Button>
+            <Button variant="" onClick={handleAddToWatchlist}>Add to Watchlist</Button><Button id={coinData?.id} onClick={handleBuy} variant="danger">Buy</Button>
         </Modal.Footer>
     </Modal>
   );

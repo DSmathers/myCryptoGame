@@ -9,6 +9,7 @@ import MarketTab from './Views/Game/market/MarketTab';
 import Watchlist from './Views/Game/watchlist/Watchlist';
 import Wallet from './Views/Game/wallet/Wallet';
 import Game from './Views/Game/Game';
+import Transaction from './Views/Game/transactions/Transaction';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path='/market' element={<MarketTab />} />
             <Route path='/wallet' element={<Wallet />} />
             <Route path='/watchlist' element={<Watchlist />} />
+            <Route path='/trade' element={<Transaction />} />
           </Route>
         </Routes>
       </Router>

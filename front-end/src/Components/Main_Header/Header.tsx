@@ -1,4 +1,3 @@
-import { Navbar, Container, Nav, Button, NavDropdown } from 'react-bootstrap'
 import { useUserAuth } from '../../Contexts/AuthContext';
 import './Header.css'
 import AuthNavbar from './navbar/AuthNavbar';

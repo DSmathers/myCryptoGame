@@ -1,8 +1,6 @@
 import axios from 'axios';
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useOutletContext } from 'react-router';
-import { FunctionExpression } from 'typescript';
-import Loading from '../../Components/Loading';
 import { User } from '../../Models/UserModel';
 import { getUserToken } from '../../Services/Firebase/firebaseMethods';
 import GameLayout from './layout_components/full_screen/GameLayout';
@@ -12,7 +10,8 @@ const Game = () => {
   const width = window.innerWidth;
   const breakpoint = 500;
 
-  const [ userData, setUserData ] = useState<User | null>(null)
+  const [ userData, setUserData ] = useState<User | null>(null);
+  const [ purchaseCoin, setPurchaseCoin ] = useState('')
   const [ loading, setLoading ] = useState<boolean>();
 
   const addToWatchlist = async (coinId:string) => {
@@ -41,8 +40,11 @@ const Game = () => {
     if(!url){throw new Error('Failed to fetch watchlist data')}
     await axios.get(url, ({headers: {authorization: token}})).then((res) => {
       setUserData(res.data);
-    }).finally(() => {setLoading(false)})
+    }).finally(() => {
+      setLoading(false)
+      })
     }
+
 
     useEffect(() => {
       getUserData();
@@ -51,8 +53,13 @@ const Game = () => {
     const context = {
       userData,
       getUserData,
+      setUserData,
       addToWatchlist,
-      removeFromWatchlist
+      removeFromWatchlist,
+      setPurchaseCoin,
+      purchaseCoin,
+      loading,
+      setLoading
     }
 
 
@@ -65,9 +72,14 @@ export default Game
 
 interface UserContext {
   userData:User | null,
-  getUserData: FunctionExpression,
+  getUserData: Function,
+  setUserData: React.Dispatch<React.SetStateAction<User>>
   addToWatchlist: Function,
-  removeFromWatchlist: Function
+  removeFromWatchlist: Function,
+  purchaseCoin: string | undefined,
+  setPurchaseCoin: React.Dispatch<React.SetStateAction<string>>,
+  loading: Boolean,
+  setLoading: React.Dispatch<React.SetStateAction<Boolean>>
 }
 export function useUserContext() {
   return useOutletContext<UserContext>();
