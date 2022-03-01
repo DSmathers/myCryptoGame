@@ -24,3 +24,17 @@ export function getUserToken(){
     const token = currentUser?.getIdToken(true)
     return token
 };
+
+
+export function NEWgetUserToken(){
+    return new Promise<string>((resolve, reject) => {
+        const { currentUser } = auth;
+        const token = currentUser?.getIdToken(true);
+        if(token){
+            resolve(token)
+        }
+        else {
+            reject(new Error('Error Fetching User Token'))
+        }
+    })
+}

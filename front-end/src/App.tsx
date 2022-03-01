@@ -9,7 +9,8 @@ import MarketTab from './Views/Game/market/MarketTab';
 import Watchlist from './Views/Game/watchlist/Watchlist';
 import Wallet from './Views/Game/wallet/Wallet';
 import Game from './Views/Game/Game';
-import Transaction from './Views/Game/transactions/Transaction';
+import BuyCryptoScreen from './Views/Game/transactions/BuyCryptoScreen';
+import SellCryptoScreen from './Views/Game/transactions/SellCryptoScreen';
 
 
 function App() {
@@ -31,7 +32,8 @@ function App() {
             <Route path='/market' element={<MarketTab />} />
             <Route path='/wallet' element={<Wallet />} />
             <Route path='/watchlist' element={<Watchlist />} />
-            <Route path='/trade' element={<Transaction />} />
+            <Route path='/trade/buy' element={<BuyCryptoScreen />} />
+            <Route path='/trade/sell' element={<SellCryptoScreen />} />
           </Route>
         </Routes>
       </Router>

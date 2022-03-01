@@ -4,6 +4,7 @@ import { useUserContext } from '../Game'
 import { getUserToken } from '../../../Services/Firebase/firebaseMethods';
 import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const Transaction = () => {
     const { purchaseCoin, userData, setUserData } = useUserContext();
@@ -13,10 +14,10 @@ const Transaction = () => {
 
     const navigate = useNavigate();
 
-    const getPrice = async () => {
-        await axios.get('https://api.coingecko.com/api/v3/coins/'+ purchaseCoin).then((res) => {
+    const getPrice = () => {
+        axios.get('https://api.coingecko.com/api/v3/coins/'+ purchaseCoin).then((res) => {
             return setCurrentPrice(res.data.market_data.current_price.usd);
-        })
+        }).catch((err) => setError(err))
     }
 
     let maxPurchase = () => {
@@ -44,7 +45,7 @@ const Transaction = () => {
 
     const submitPurchaseRequest = async (e:React.FormEvent) => {
         e.preventDefault();
-        let URL = process.env.REACT_APP_NEW_TRANSACTION_ENDPOINT;
+        let URL = process.env.REACT_APP_NEW_PURCHASE_ENDPOINT;
         let token = await getUserToken();
         console.log(purchaseAmount.toFixed(8))
         if(!URL){return setError(new Error('Error fetching URL endpoint')) }
@@ -63,9 +64,9 @@ const Transaction = () => {
 
   return (
       <>
-    <div>Transaction</div>
-    {error && <Alert variant="danger">{error.message}</Alert>}
-    {purchaseCoin  && <><div>{purchaseCoin.toUpperCase()}</div>
+    {error || !purchaseCoin?<Alert variant="danger">Oops, there seems to have been an error while loading the data. <Link to='/wallet'>Go To Wallet</Link></Alert>:
+    <>
+    <div>Buy {purchaseCoin?.toUpperCase()}</div>
     <div>Current Price: ${currentPrice?.toLocaleString()}</div>
     <div>USD Balance: ${userData?.wallet.usd.toLocaleString()}</div>
     <div>Max Purchase: {maxPurchase()?.toFixed(8)}</div>
@@ -76,7 +77,8 @@ const Transaction = () => {
             <button type="submit">Submit</button>
         </form>
         <div>Total Price: ${currentPrice && (purchaseAmount * currentPrice).toLocaleString()}</div>
-    </div></>}
+    </div>
+    </>}
   </>)
 }
 

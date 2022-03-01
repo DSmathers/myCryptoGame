@@ -6,11 +6,11 @@ import { useUserContext } from '../../Game';
 
 const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
     const [ coinData, setCoinData ]: null | any = useState(null);
-    const { addToWatchlist, setPurchaseCoin } = useUserContext();
+    const { addToWatchlist, NEWaddToWatchlist, setPurchaseCoin } = useUserContext();
     const navigate = useNavigate();
 
     const handleAddToWatchlist = (e:React.KeyboardEvent | React.MouseEvent) => {
-       return addToWatchlist(coinData.id)
+       return NEWaddToWatchlist(coinData.id)
    };
 
     const getCoinDetails = async() => {
@@ -32,7 +32,7 @@ const CoinDetailsModal = ({ selectedCoin, setSelectedCoin }:any) => {
     const handleBuy = (e:React.MouseEvent | React.KeyboardEvent) => {
         setPurchaseCoin(selectedCoin)
         setSelectedCoin(undefined)
-        navigate('/trade')
+        navigate('/trade/buy')
     }
 
    

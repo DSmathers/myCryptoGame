@@ -1,12 +1,16 @@
 import axios from "axios";
 import { useUserContext } from "../Game";
 import React, { useLayoutEffect, useState } from 'react'
+import { Alert } from "react-bootstrap";
+import AssetDetailsModal from "./components/AssetDetailsModal";
 
 const Wallet = () => {
   const { userData, loading } = useUserContext();
   const walletObj:any = new Object(userData?.wallet);
   const [ walletInfo, setWalletInfo ] = useState<CryptoData>();
+  const [ selectedCoin, setSelectedCoin ] = useState<null | string>(null);
 
+  
 
   interface CryptoData{
     total_value: number,
@@ -59,7 +63,7 @@ const Wallet = () => {
           }
         res(cryptoData)
       } catch (error) {
-        console.log(error)
+        rej(error)
       }
     })
   }
@@ -75,6 +79,11 @@ const Wallet = () => {
       throw new Error(error);
     });
   };
+
+  const handleSelectCoin = (e:React.MouseEvent | React.KeyboardEvent) => {
+    e.preventDefault();
+    setSelectedCoin(e.currentTarget.id)
+  }
 
   useLayoutEffect(() => {
     console.log('layout effect fired')
@@ -92,7 +101,7 @@ const Wallet = () => {
             walletInfo && walletInfo.coin_data.map((i) => {
               if(i){
                 return(
-                  <div key={i?.name} id={i.id} style={{border: '1px solid black', margin: '2px auto', textAlign: 'center', maxWidth: '60%'}} onClick={(e:React.MouseEvent) => console.log('clicked: ' + e.currentTarget.id)}>
+                  <div key={i?.name} id={i.id} style={{border: '1px solid black', margin: '2px auto', textAlign: 'center', maxWidth: '60%'}} onClick={handleSelectCoin}>
                     <div>{i?.name}</div>
                     <div>Total Held: {i?.held}</div>
                     <div>Current Price: ${i?.cur_price.toLocaleString()}</div>
@@ -103,6 +112,8 @@ const Wallet = () => {
             })
           }
         </div>
+        {/*Selected Coin Modal Will go Here with onShow property set to selected coin boolean */}
+        {selectedCoin!==null && <AssetDetailsModal selectedCoin={selectedCoin} setSelectedCoin={setSelectedCoin} walletBalance={Number(walletInfo?.coin_data.find(coin => coin?.id===selectedCoin)?.held)} />}
       </>
   );
 };
