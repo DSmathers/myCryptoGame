@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const SupportedCoins = new mongoose.Schema({
     "usd": {type: Number, required: false},
     "bitcoin": {type: Number, required: false},
+    "ethereum": {type: Number, required: false},
     "tether": {type: Number, required: false},
     "binancecoin": {type: Number, required: false},
     "usd-coin": {type: Number, required: false},

@@ -37,7 +37,7 @@ router.patch('/watchlist/rm', (req, res) => {
     res.status(200).send('Removed Function Fired -- testing')
 })
 
-router.patch('/transaction', async (req, res) => {
+router.patch('/buy', async (req, res) => {
     const token:string | undefined = req.headers.authorization
     if(!token){return res.status(500).send('Unauthorized Request')}
     let currentPrice = await getCurrentPrice(req.body.data.coinId, req.body.data.purchaseAmount, req.body.data.currencyUsed)
@@ -56,6 +56,44 @@ router.patch('/transaction', async (req, res) => {
         .catch((err) => res.status(500).send(err.message))
     })
     return
+});
+
+
+let getTokenBalance = (path:string, user:any) => {
+    return new Promise<number>((resolve, reject) => {
+        const parts = path.split(".");
+        if(!user){throw new Error("Error fetching wallet balance")}
+        try {
+            resolve(parts.reduce((obj, part) => obj[part], user))
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+router.patch('/sell', async (req, res) => {
+    const token:string | undefined = req.headers.authorization;
+    const currentPrice = await getCurrentPrice(req.body.assetId, req.body.saleAmount, 'usd');
+    if(!token){return res.status(500).send('Unauthorized Request')}
+    else{
+        isAuthorizedUser(token).then((uid) => {
+            getUser(uid).then((user) => {
+                getTokenBalance(`wallet.${req.body.assetId}`, user).then((balance) => {
+                    if(balance>=req.body.saleAmount){
+                        postNewTransaction(uid, 'usd', currentPrice, req.body.assetId, req.body.saleAmount)
+                        .then((doc) => {
+                            if(doc){
+                                res.status(200).send('success ping')
+                            }
+                        })
+                        .catch((err) => {
+                            res.status(500).json(err)
+                        })
+                    }
+                })
+            })
+        })
+    }
 })
 
 export default router;

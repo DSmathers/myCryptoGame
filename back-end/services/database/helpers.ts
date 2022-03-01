@@ -14,7 +14,7 @@ export const lookupUser = async (id:string) => {
         }
     }).catch((err) => {
         console.log(err);
-    });
+    })
     return doesExist
 };
 
@@ -26,7 +26,7 @@ export const getUser = async (id:string) => {
         return user;
     }).catch((error) => {
         throw new Error(error);
-    });
+    })
     return userData;
 }
 
@@ -50,7 +50,7 @@ export const removeFromWatchlist = async (id:string, coin:string) => {
     })
 };
 
-//https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd
+
 export const getCurrentPrice = async (coin:string, amount:number, used:string) => {
     let price:number = 0;
     await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=' + coin + '&vs_currencies=' + used).then((res) => {
@@ -69,6 +69,12 @@ export const postNewTransaction = async (uid:string, assIn: string, assInNumber:
     let dotNotated = (string:string) => {
         let value:string = "wallet." + string;
         return value;
+    }
+    if(assIn === 'usd'){
+        assInNumber = Number(assInNumber.toFixed(2))
+    }
+    if(assOut === 'usd'){
+        assOutNum = Number(assOutNum.toFixed(2))
     }
 
     let updateData = 
