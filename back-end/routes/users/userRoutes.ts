@@ -83,7 +83,8 @@ router.patch('/sell', async (req, res) => {
                         postNewTransaction(uid, 'usd', currentPrice, req.body.assetId, req.body.saleAmount)
                         .then((doc) => {
                             if(doc){
-                                res.status(200).send('success ping')
+                                let response = JSON.stringify(doc, replacer)
+                                res.status(200).send(response)
                             }
                         })
                         .catch((err) => {
