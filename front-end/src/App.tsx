@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Main from './Views/Main';
+import Main from './Views/Landing/Main';
 import PrivateRoute from './Routes/PrivateRoute';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Login from './Components/login-form/Login';
@@ -11,13 +11,14 @@ import Wallet from './Views/Game/wallet/Wallet';
 import Game from './Views/Game/Game';
 import BuyCryptoScreen from './Views/Game/transactions/BuyCryptoScreen';
 import SellCryptoScreen from './Views/Game/transactions/SellCryptoScreen';
+import LandingPage from './Views/Landing/LandingPage';
 
 
 function App() {
   return (
       <Router>
         <Routes>
-          <Route path='/' element={<Main />} />
+   {/*        <Route path='/' element={<Main />} />
           <Route path='/login' element={
             <PublicRoute>
               <Login />
@@ -25,7 +26,13 @@ function App() {
           <Route path='/signup' element={
               <PublicRoute>
                 <Signup />
-              </PublicRoute>} />
+              </PublicRoute>} /> */}
+
+          <Route element={<PublicRoute><Main /></PublicRoute>}>
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+          </Route>
 
   
           <Route element={<PrivateRoute><Game /></PrivateRoute>}>
