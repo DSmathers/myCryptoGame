@@ -1,4 +1,4 @@
-import admin from 'firebase-admin'
+import admin from 'firebase-admin';
 const serviceAccount = require('../../authKey.json')
 export default admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

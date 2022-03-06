@@ -1,8 +1,14 @@
 import mongoose from 'mongoose';
 
+const SupportedCoinsSchemaProps = {
+    type: Number,
+    required: false,
+    min: 10
+}
+
 const SupportedCoins = new mongoose.Schema({
-    "usd": {type: Number, required: false},
-    "bitcoin": {type: Number, required: false},
+    "usd": {SupportedCoinsSchemaProps},
+    "bitcoin": {SupportedCoinsSchemaProps},
     "ethereum": {type: Number, required: false},
     "tether": {type: Number, required: false},
     "binancecoin": {type: Number, required: false},

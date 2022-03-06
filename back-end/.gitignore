@@ -33,3 +33,4 @@ npm-debug.log
 
 .env
 authKey.json
+config/firebaseAuthKey.ts
