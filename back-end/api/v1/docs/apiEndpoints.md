@@ -1,10 +1,34 @@
 
+# User Control Endpoints
 
-# Add New User
+## Add New User
+
 `POST /api/v1/users/new-user`
 
-# Get Supported Coins Data
-## Returns market data for supported coins. 
+## Add to watchlist
+
+`PATCH api/v1/users/user/addToWatchlist`
+
+
+
+## Remove from watchlist
+
+`PATCH api/v1/users/user/addToWatchlist`
+
+## Buy Cryptocurrency with USD
+
+`PATCH api/v1/users/user/addToWatchlist`
+
+## Sell Cryptocurrency for USD
+
+`PATCH api/v1/users/user/addToWatchlist`
+
+
+
+
+# Market Data Endpoints
+
+## Get data on all supported coins. 
 
  `GET /api/v1/coins/getSupported`
 
@@ -41,8 +65,9 @@ Example response object:
 }
 ````
 
-# Get Selected Coin Details 
-## Returns details for selected coin. 
+ 
+## Get market details on selected coin.
+> :selectedCoinId must be a supported cryptocurrency.  
 
 `GET api/v1/coins/getSelected/:selectedCoinId`
 

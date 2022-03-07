@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { createNewUserObject } from "../../models/users/newUserObject";
 import User from "../../models/users/userSchema";
-import verifyUser from "../../services/auth/getAuthorizedUser";
+import verifyUser from "../../services/auth/verifyUser";
 
 export const createNewUser = async (req: Request, res: Response, next: NextFunction) => {
     // check for token
