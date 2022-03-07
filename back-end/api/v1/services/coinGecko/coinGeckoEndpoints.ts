@@ -48,11 +48,12 @@ export const getSelectedCoinDetails = async (coin:string) => {
             "price_change_percentage_200d": responseData.data.market_data.price_change_percentage_200d,
             "price_change_percentage_1y": responseData.data.market_data.price_change_percentage_1y,
             "market_cap_change_24h": responseData.data.market_data.market_cap_change_24h,
-            "market_cap_change_percentage_24h": responseData.data.market_data.market_cap_change_percentage_24h
+            "market_cap_change_percentage_24h": responseData.data.market_data.market_cap_change_percentage_24h,
+            "total_supply": responseData.data.market_data.total_supply,
+            "max_supply": responseData.data.market_data.max_supply,
+            "circulating_supply": responseData.data.market_data.circulating_supply
         },
         "last_updated": responseData.data.last_updated
     }
-
-    console.log(responseObject)
-    return responseData.data;
+    return responseObject;
 }
