@@ -1,16 +1,14 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose'
-import User from './models/UserWallet';
+
 
 
 //Import Routes
 import routes from './api/v1/routes'
 
-import getRoutes from './routes/markets/getMarketData'
-import createNewUser from './routes/users/postNewUser'
 import userRoutes from './routes/users/userRoutes'
 
 dotenv.config()
@@ -31,9 +29,9 @@ app.get('/', (req, res,  next) => {
 })
 
 //Routing
-app.use('/API/markets/', getRoutes);
+
 app.use('/API/users/user', userRoutes);
-app.use('/API/users/new-user/', createNewUser);
+
 
 const conn = async () => {
     try {

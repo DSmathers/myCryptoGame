@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+ import { Request, Response } from "express";
 import admin from '../../services/auth/firebaseConfig'
 import { getUser } from "../../services/database/helpers";
 
@@ -24,4 +24,4 @@ export const getAuthorizedUser = async (req:Request, res:Response) => {
                 return res.status(200).json(JSON.parse(trimmedData))})
         .catch((error) => {throw new Error(error)});
     });
-}
+} 

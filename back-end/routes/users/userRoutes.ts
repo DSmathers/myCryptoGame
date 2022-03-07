@@ -2,28 +2,13 @@ import express from 'express'
 import { Error } from 'mongoose';
 import { getAuthorizedUser, replacer } from '../../controllers/userControllers/getAuthorizedUser'
 import { isAuthorizedUser } from '../../services/auth/authHelpers';
-import { addtoWatchlist, removeFromWatchlist, getUser, getCurrentPrice, postNewTransaction } from '../../services/database/helpers';
+import { removeFromWatchlist, getUser, getCurrentPrice, postNewTransaction } from '../../services/database/helpers';
 
 const router = express.Router()
 
 router.get('/', getAuthorizedUser);
 
 
-
-// Add to watchlist endpoint.
-router.patch('/watchlist/add', (req, res) => {
-    if(req){
-        const token = req.headers.authorization;
-        const coin = req.body.data
-        if(!token){
-            return res.status(500).send({"Error": 'Authorization Error'})
-        }
-        isAuthorizedUser(token).then((uid) => {
-            addtoWatchlist(uid, coin)
-        });
-        res.status(200).send('ping')
-    }
-})
 
 router.patch('/watchlist/rm', (req, res) => {
     const token = req.headers.authorization;
