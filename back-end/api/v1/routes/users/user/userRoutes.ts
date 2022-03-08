@@ -1,7 +1,9 @@
 import express from 'express'
-import { addToWatchlist, buyCryptoWithUsd, removeFromWatchlist, sellCryptoForUsd } from '../../../controllers/users/userControllers';
+import { addToWatchlist, buyCryptoWithUsd, getUserData, removeFromWatchlist, sellCryptoForUsd } from '../../../controllers/users/userControllers';
 
 const userRoutes = express.Router();
+
+userRoutes.get('/', getUserData)
 
 userRoutes.patch('/addToWatchlist', addToWatchlist)
 

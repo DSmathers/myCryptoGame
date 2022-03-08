@@ -1,14 +1,11 @@
 import express from 'express'
 import { Error } from 'mongoose';
-import { getAuthorizedUser, replacer } from '../../controllers/userControllers/getAuthorizedUser'
+import { trimUserObject } from '../../api/v1/helpers/trimUserObject';
 import { isAuthorizedUser } from '../../services/auth/authHelpers';
 import { removeFromWatchlist, getUser, getCurrentPrice, postNewTransaction } from '../../services/database/helpers';
 
+
 const router = express.Router()
-
-router.get('/', getAuthorizedUser);
-
-
 
 router.patch('/watchlist/rm', (req, res) => {
     const token = req.headers.authorization;
@@ -32,7 +29,7 @@ router.patch('/buy', async (req, res) => {
                 postNewTransaction(uid, req.body.data.coinId, req.body.data.purchaseAmount, req.body.data.currencyUsed, Number(currentPrice.toFixed(2)))
                 .then((doc) => {
                     if(!doc){return}
-                    let response = JSON.stringify(doc, replacer)
+                    let response = JSON.stringify(doc, trimUserObject)
                     res.status(200).send(response)
                 })
             }
@@ -68,7 +65,7 @@ router.patch('/sell', async (req, res) => {
                         postNewTransaction(uid, 'usd', currentPrice, req.body.assetId, req.body.saleAmount)
                         .then((doc) => {
                             if(doc){
-                                let response = JSON.stringify(doc, replacer)
+                                let response = JSON.stringify(doc, trimUserObject)
                                 res.status(200).send(response)
                             }
                         })
